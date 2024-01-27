@@ -35,7 +35,8 @@ export class AppComponent implements AfterViewInit, OnInit {
     const shareData = {
       title: 'My title',
       text: 'Descarga el QR de Le Blond Hair Salon por si necesitas tenerlo a mano y acceder a la web más fácilmente!', // lo que va en el mensaje de whatsapp
-      url: './../favicon.ico'
+      // url: './../favicon.ico'
+      url: './../assets/imagenprueba.png'
     };
     if (window.navigator.canShare(shareData)) {
       await window.navigator.share(shareData)
