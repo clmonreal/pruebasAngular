@@ -34,11 +34,13 @@ export class AppComponent implements AfterViewInit, OnInit {
   async shareImage() {
     const shareData = {
       title: 'My title',
-      text: 'My text',
+      text: 'Descarga el QR de Le Blond Hair Salon por si necesitas tenerlo a mano y acceder a la web más fácilmente!', // lo que va en el mensaje de whatsapp
       url: './../imagenPrueba.png'
     };
     if (window.navigator.canShare(shareData)) {
-      await window.navigator.share(shareData);
+      await window.navigator.share(shareData)
+      .then()
+      .catch();
     }
   }
 
