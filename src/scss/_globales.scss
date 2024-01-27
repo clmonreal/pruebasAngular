@@ -1,0 +1,10 @@
+html {
+    font-size: 62.5%; // nos asegura en todo el proyecto que 1 rem sea igual a 10 px
+    box-sizing: border-box; // el snippet de Paul Irish
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit; // para que el padding no nos suponga un problema.
+}

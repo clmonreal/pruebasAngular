@@ -1,0 +1,132 @@
+@import 'variables';
+@import 'mixins';
+
+.contenedor {
+
+    display: grid;
+    place-items: center;
+    margin-bottom: 5rem;
+
+    h1 {
+        background-color: $verde;
+        font-family: $fuente_principal;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        width: 20rem;
+
+    }
+
+    h2 {
+        font-size: 5rem;
+
+        @include tablet {
+            font-size: 2rem;
+        }
+    }
+
+}
+
+.share-button {
+    padding: 4rem;
+    background-color: rgb(18, 87, 147);
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.chart-container {
+    width: 400px;
+    height: 300px;
+}
+
+.switcher {
+    display: flex;
+    align-items: center;
+    height: 30px;
+    margin-top: 8px;
+    color: #2196F3;
+}
+
+.switcher-item {
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    padding: 6px 8px;
+    font-size: 14px;
+    color: #262b3e;
+    background-color: transparent;
+    margin-right: 8px;
+    border: none;
+    border-radius: 4px;
+    outline: none;
+}
+
+.switcher-item:hover {
+    background-color: #f2f3f5;
+}
+
+.switcher-active-item {
+    text-decoration: none;
+    cursor: default;
+    color: #262b3e;
+}
+
+.switcher-active-item,
+.switcher-active-item:hover {
+    background-color: #e1eff9;
+}
+
+.menu-container {
+    // background: #04aa6d;
+    font-size: 2rem;
+    margin-top: 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    .menu-toggler {
+        position: absolute;
+        padding: 0rem;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .menu {
+        position: absolute; // Posicionamiento absoluto para el menú
+        top: calc(100% + 5rem); // Posición debajo del menú desplegable
+        right: -5rem; // Alinear la derecha del menú con la derecha del menú desplegable
+        width: 20rem;
+        background: #333;
+        color: #fff;
+
+        svg {
+            width: 3rem;
+            height: auto;
+        }
+
+        hr {
+            margin: 0 1rem;
+            border: none;
+            background: #555454;
+            height: .2rem;
+        }
+
+        .menu-item {
+            cursor: pointer;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            transition: .3s ease;
+
+            &:hover {
+                background: #555454;
+            }
+        }
+    }
+}
