@@ -28,36 +28,22 @@ export class AppComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit(): void {
-    this.loadImageUrl();
+    // this.loadImageUrl();
   }
 
-  shareImage() {
-    if (navigator.share && this.imageUrl) {
-      fetch(this.imageUrl!.toString())
-        .then(response => response.blob())
-        .then(blob => {
-          const file = new File([blob], 'imagenPrueba.png', { type: blob.type });
-          navigator.share({
-            files: [file],
-            title: 'Título de la imagen',
-            text: 'Este es mi texto para la imagen'
-          }).then(() => {
-            console.log('Imagen compartida exitosamente');
-          }).catch((error) => {
-            console.error('Error al compartir la imagen:', error);
-            alert('Error al compartir la imagen');
-          });
-        })
-        .catch(error => {
-          console.error('Error al cargar la imagen:', error);
-          alert('Error al cargar la imagen');
-        });
+  async shareImage() {
+    const shareData = {
+      title: 'My title',
+      text: 'My text',
+      url: './../imagenPrueba.png'
+    };
+    if (window.navigator.canShare(shareData)) {
+      await window.navigator.share(shareData);
     }
   }
 
   loadImageUrl() {
-    this.imageUrl = this.sanitizer.bypassSecurityTrustUrl('./../imagenPrueba.png');
-    console.log(this.imageUrl);
+    // this.imageUrl = this.sanitizer.bypassSecurityTrustUrl('');
   }
 
   toggleMenu() {
