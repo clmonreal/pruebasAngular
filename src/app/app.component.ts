@@ -46,12 +46,13 @@ export class AppComponent implements AfterViewInit, OnInit {
   shareImage() {
     if (navigator.share && this.imageUrl) {
       navigator.share({
-        title: 'Título de la imagen',
         files: [
-          new File([this.blob!], 'image.png', {
+          new File([this.blob!], 'favicon.icon', {
             type: this.blob!.type,
           }),
         ],
+        title: 'Título de la imagen',
+        text: 'Este es mi texto para la imagen'
       }).then(() => {
         // alert('Imagen compartida exitosamente');
         console.log('Imagen compartida exitosamente');
