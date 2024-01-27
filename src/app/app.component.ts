@@ -1,7 +1,6 @@
-import { AfterContentInit, AfterViewChecked, AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { SafeUrl } from '@angular/platform-browser';
 import { createChart } from 'lightweight-charts';
-import { HttpClient } from '@angular/common/http';
 
 // declare const LightweightCharts: any;
 @Component({
@@ -24,23 +23,11 @@ export class AppComponent implements AfterViewInit, OnInit {
   imageUrl: SafeUrl = '';
   blob: Blob | undefined;
 
-  constructor(private http: HttpClient, private sanitizer: DomSanitizer) {
+  constructor() {
     this.chartContainer = {} as ElementRef;
   }
 
   ngOnInit(): void {
-    this.loadImage();
-  }
-
-  loadImage() {
-    this.http.get('./../favicon.ico', { responseType: 'blob' }).subscribe(response => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        // this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(reader.result as string);
-        this.imageUrl = './../favicon.ico'
-      };
-      reader.readAsDataURL(response);
-    });
   }
 
   shareImage() {

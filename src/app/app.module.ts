@@ -11,8 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
     ClickOutsideDirective
   ],
   imports: [
-    BrowserModule,
-    HttpClientModule
+    BrowserModule
   ],
   providers: [],
   bootstrap: [AppComponent]
