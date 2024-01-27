@@ -22,6 +22,7 @@ export class AppComponent implements AfterViewInit, OnInit {
   isMenuOpened: boolean = false;
 
   imageUrl: SafeUrl = '';
+  blob: Blob | undefined;
 
   constructor(private http: HttpClient, private sanitizer: DomSanitizer) {
     this.chartContainer = {} as ElementRef;
@@ -35,10 +36,38 @@ export class AppComponent implements AfterViewInit, OnInit {
     this.http.get('./../favicon.ico', { responseType: 'blob' }).subscribe(response => {
       const reader = new FileReader();
       reader.onloadend = () => {
-        this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(reader.result as string);
+        // this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(reader.result as string);
+        this.imageUrl = './../favicon.ico'
       };
       reader.readAsDataURL(response);
     });
+  }
+
+  shareImage() {
+    if (navigator.share && this.imageUrl) {
+      navigator.share({
+        title: 'Título de la imagen',
+        files: [
+          new File([this.blob!], 'image.png', {
+            type: this.blob!.type,
+          }),
+        ],
+      }).then(() => {
+        // alert('Imagen compartida exitosamente');
+        console.log('Imagen compartida exitosamente');
+      }).catch((error) => {
+        console.error('Error al compartir la imagen:', error);
+        alert('Error al compartir la imagen');
+      });
+    }
+  }
+
+  toggleMenu() {
+    this.isMenuOpened = !this.isMenuOpened;
+  }
+
+  clickedOutside(): void {
+    this.isMenuOpened = false;
   }
 
   ngAfterViewInit() {
@@ -596,27 +625,4 @@ export class AppComponent implements AfterViewInit, OnInit {
 
     this.areaSeries.setData(seriesesData);
   }
-
-  shareImage() {
-    if (navigator.share && this.imageUrl) {
-      navigator.share({
-        title: 'Título de la imagen',
-        url: this.imageUrl.toString()
-      }).then(() => {
-        // alert('Imagen compartida exitosamente');
-        console.log('Imagen compartida exitosamente');
-      }).catch((error) => {
-        console.error('Error al compartir la imagen:', error);
-        alert('Error al compartir la imagen');
-      });
-    }
-  }
-
-  toggleMenu() {
-    this.isMenuOpened = !this.isMenuOpened;
-  }
-
-  clickedOutside(): void {
-    this.isMenuOpened = false;
-  }
-}
+} 
