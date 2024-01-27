@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { SafeUrl } from '@angular/platform-browser';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { createChart } from 'lightweight-charts';
 
 // declare const LightweightCharts: any;
@@ -23,31 +23,41 @@ export class AppComponent implements AfterViewInit, OnInit {
   imageUrl: SafeUrl = '';
   blob: Blob | undefined;
 
-  constructor() {
+  constructor(private sanitizer: DomSanitizer) {
     this.chartContainer = {} as ElementRef;
   }
 
   ngOnInit(): void {
+    this.loadImageUrl();
   }
 
   shareImage() {
     if (navigator.share && this.imageUrl) {
-      navigator.share({
-        files: [
-          new File([this.blob!], 'favicon.icon', {
-            type: this.blob!.type,
-          }),
-        ],
-        title: 'Título de la imagen',
-        text: 'Este es mi texto para la imagen'
-      }).then(() => {
-        // alert('Imagen compartida exitosamente');
-        console.log('Imagen compartida exitosamente');
-      }).catch((error) => {
-        console.error('Error al compartir la imagen:', error);
-        alert('Error al compartir la imagen');
-      });
+      fetch(this.imageUrl!.toString())
+        .then(response => response.blob())
+        .then(blob => {
+          const file = new File([blob], 'imagenPrueba.png', { type: blob.type });
+          navigator.share({
+            files: [file],
+            title: 'Título de la imagen',
+            text: 'Este es mi texto para la imagen'
+          }).then(() => {
+            console.log('Imagen compartida exitosamente');
+          }).catch((error) => {
+            console.error('Error al compartir la imagen:', error);
+            alert('Error al compartir la imagen');
+          });
+        })
+        .catch(error => {
+          console.error('Error al cargar la imagen:', error);
+          alert('Error al cargar la imagen');
+        });
     }
+  }
+
+  loadImageUrl() {
+    this.imageUrl = this.sanitizer.bypassSecurityTrustUrl('./../imagenPrueba.png');
+    console.log(this.imageUrl);
   }
 
   toggleMenu() {
